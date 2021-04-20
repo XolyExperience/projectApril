@@ -1,24 +1,23 @@
 import express from 'express';
-import fs from 'fs';
+import ProductController from './controllers/Product.js'
+import bodyParser from'body-parser';
 
 const app = express();
 const PORT = 3000;
 
-let products = JSON.parse(fs.readFileSync('./data/products.json', 'UTF-8'));
+app.use(bodyParser.json());
 
 // @route GET /api/products
-app.get('/api/products', (req, res) => {
-    res.send({data: products});
-});
+app.get('/api/products', ProductController.getAllProducts);
 
 // @route GET /api/products/:id
-app.get('/api/products/:id', (req, res) => {
-    const product = products.filter(p => p.id === req.params.id);
-    if (!product.length) {
-        res.status(404).send({message: "Product was not found!"}); 
-    } else {
-        res.status(200).send({data: product});
-    }
-});
+app.get('/api/products/:id', ProductController.getProductById);
+
+// @route PUT /api/products/:id         // Update a product by id
+
+// @route DELETE /api/products/:id      // Delete a product by id
+
+// @route POST /api/products            // Create a product
+app.post('/api/products', ProductController.createProduct);
 
 app.listen(PORT, () => console.log('I am listening on port', PORT));

@@ -28,7 +28,7 @@ function createProduct(body) {
             price: body.price || 99,
         };
         products.push(newProduct);
-        fs.writeFileSync('.data/products.json', JSON.stringify(products), 'UTF-8')
+        fs.writeFileSync('./data/products.json', JSON.stringify(products), 'UTF-8')
         return true;
     } catch(error) {
         console.log(error);

@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Calendar</title>
+        <link rel="stylesheet" href="./styles/css/style.css" />
+        <script defer src="app.js"></script>
+    </head>
+    <body>
+        <div class="outerBox">
+            <header>
+                <h1>My Calendar</h1>
+            </header>
+            <div class="innerBox">
+                <div class="innerHeader">
+                    <button id="prev"></button>
+                    <div id="year"></div>
+                    <div id="month"></div>
+                    <div id="week"></div>
+                    <button id="next"></button>
+                </div>
+                <div id="weekdayBox">
+                    <div class="weekday">
+                        <h1>Mån</h1>
+                        <h1></h1>
+                    </div>
+                    <div class="weekday">
+                        <h1>Tis</h1>
+                        <h1></h1>
+                    </div>
+                    <div class="weekday">
+                        <h1>Ons</h1>
+                        <h1></h1>
+                    </div>
+                    <div class="weekday">
+                        <h1>Tors</h1>
+                        <h1></h1>
+                    </div>
+                    <div class="weekday">
+                        <h1>Fre</h1>
+                        <h1></h1>
+                    </div>
+                    <div class="weekday">
+                        <h1>Lör</h1>
+                        <h1></h1>
+                    </div>
+                    <div class="weekday">
+                        <h1>Sön</h1>
+                        <h1></h1>
+                    </div>
+                </div>
+                <div class="eventBox">
+                    <div class="eventBox_Box" id="view">
+                        <p>Change View</p>
+                    </div>
+                    <div class="eventBox_Box" id="event"><p>Add Event</p></div>
+                    <div class="eventBox_Box hidden" id="planner">
+                        <div class="form">
+                            <form id="eventForm">
+                                <label for="title">Title:</label><br />
+                                <input
+                                    type="text"
+                                    id="title"
+                                    name="title"
+                                /><br />
+                                <label for="date">Datum:</label><br />
+                                <input
+                                    type="text"
+                                    id="date"
+                                    name="date"
+                                    value="2021-05-05"
+                                /><br />
+                                <label for="starttime">Start tid:</label><br />
+                                <input
+                                    type="text"
+                                    id="starttime"
+                                    name="starttime"
+                                /><br />
+                                <label for="endtime">Slut tid:</label><br />
+                                <input
+                                    type="text"
+                                    id="endtime"
+                                    name="endtime"
+                                /><br />
+                                <label for="description">Beskrivning:</label
+                                ><br />
+                                <textarea
+                                    type="text"
+                                    id="description"
+                                    name="description"
+                                    rows="3"
+                                    cols="20"
+                                >
+                                </textarea
+                                ><br />
+                                <label for="location">Plats:</label><br />
+                                <input
+                                    type="text"
+                                    id="location"
+                                    name="location"
+                                /><br /><br />
+                                <button>Lägg till</button>
+                                <br />
+                                <br />
+                                <button
+                                    type="button"
+                                    value="Reset"
+                                    onClick="clearForm(this.form, 'planner')"
+                                >
+                                    Reset
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="eventBox_Box hidden" id="updater">
+                        <div class="form">
+                            <form id="updateForm">
+                                <label for="title">Title:</label><br />
+                                <input
+                                    type="text"
+                                    id="title"
+                                    name="title"
+                                /><br />
+                                <label for="date">Datum:</label><br />
+                                <input
+                                    type="text"
+                                    id="date"
+                                    name="date"
+                                /><br />
+                                <label for="starttime">Start tid:</label><br />
+                                <input
+                                    type="text"
+                                    id="starttime"
+                                    name="starttime"
+                                /><br />
+                                <label for="endtime">Slut tid:</label><br />
+                                <input
+                                    type="text"
+                                    id="endtime"
+                                    name="endtime"
+                                /><br />
+                                <label for="description">Beskrivning:</label
+                                ><br />
+                                <textarea
+                                    type="text"
+                                    id="description"
+                                    name="description"
+                                    rows="3"
+                                    cols="20"
+                                >
+                                </textarea
+                                ><br />
+                                <label for="location">Plats:</label><br />
+                                <input
+                                    type="text"
+                                    id="location"
+                                    name="location"
+                                /><br /><br />
+                                <button type="submit" value="Submit">
+                                    Submit
+                                </button>
+                                <br />
+                                <br />
+                                <button
+                                    type="button"
+                                    value="Reset"
+                                    onClick="clearForm(this.form, 'updater')"
+                                >
+                                    Reset
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="eventBox_Box" id="log"><p>Log Out</p></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,269 @@
+* {
+  margin: 0;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.375rem;
+}
+
+h4 {
+  font-size: 1.125rem;
+}
+
+h5 {
+  font-size: 1rem;
+}
+
+h6 {
+  font-size: 0.875rem;
+}
+
+p {
+  font-size: 1.125rem;
+}
+
+.moveUp {
+  -webkit-animation-name: test;
+          animation-name: test;
+  -webkit-animation-duration: 1s;
+          animation-duration: 1s;
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
+  -webkit-animation-iteration-count: 1;
+          animation-iteration-count: 1;
+  -webkit-animation-fill-mode: both;
+          animation-fill-mode: both;
+}
+
+@-webkit-keyframes test {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+@keyframes test {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+/* Extra small devices (phones, 600px and down) */
+/* Small devices (portrait tablets and large phones, 600px and up) */
+/* Medium devices (landscape tablets, 768px and up) */
+/* Large devices (laptops/desktops, 992px and up) */
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+body {
+  background-color: #ffffff;
+}
+
+.outerBox {
+  background-color: #add8e6;
+  margin-left: 1rem;
+  margin-right: 1rem;
+  border-radius: 3rem 3rem 0 0;
+}
+
+.outerBox header {
+  text-align: center;
+  padding: 1rem;
+}
+
+.outerBox header h1 {
+  font-size: 2.5rem;
+}
+
+.outerBox .innerBox {
+  background-color: #ffffff;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: 80vw 20vw;
+      grid-template-columns: 80vw 20vw;
+  -ms-grid-rows: 4rem auto;
+      grid-template-rows: 4rem auto;
+}
+
+.outerBox .innerBox .innerHeader {
+  -ms-grid-column: span 2;
+      grid-column-start: span 2;
+  padding: 20px;
+  text-align: center;
+  font-size: 2em;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.outerBox .innerBox .innerHeader button {
+  width: 6rem;
+  border: none;
+  background-color: white;
+  cursor: pointer;
+}
+
+.outerBox .innerBox .innerHeader button#prev {
+  background-image: url(../../assets/angle-left.svg);
+  background-repeat: no-repeat;
+}
+
+.outerBox .innerBox .innerHeader button#next {
+  background-image: url(../../assets/angle-right.svg);
+  background-repeat: no-repeat;
+}
+
+.outerBox .innerBox #weekdayBox {
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (minmax(0, 1fr))[7];
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.outerBox .innerBox #weekdayBox .weekday {
+  margin: 2px;
+  background-color: #b0e0e6;
+  padding: 0;
+  min-height: 60vh;
+}
+
+.outerBox .innerBox #weekdayBox .weekday h1 {
+  font-size: 1.75rem;
+  padding: 0;
+  margin: 0;
+  background-color: #000080;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
+.outerBox .innerBox #weekdayBox .weekday .event {
+  border: 1px solid #87ceeb;
+  width: 100%;
+}
+
+.outerBox .innerBox #weekdayBox .weekday .event h3 {
+  font-size: 1rem;
+  pointer-events: none;
+}
+
+.outerBox .innerBox #weekdayBox .weekday .event p {
+  font-size: 0.75rem;
+  pointer-events: none;
+}
+
+.outerBox .innerBox #weekdayBox .weekday .event p.hidden {
+  display: none;
+}
+
+.outerBox .innerBox #weekdayBox .weekday .event:hover {
+  background-color: #9dd7ef;
+  border: 1px solid blue;
+}
+
+.outerBox .innerBox #weekdayBox #today {
+  background-color: #87ceeb;
+}
+
+.outerBox .innerBox .eventBox {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: start;
+      -ms-flex-pack: start;
+          justify-content: flex-start;
+}
+
+.outerBox .innerBox .eventBox .eventBox_Box {
+  border-radius: 1rem;
+  width: calc(100% - 2rem);
+  height: 2rem;
+  margin: 2px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.outerBox .innerBox .eventBox .eventBox_Box p {
+  pointer-events: none;
+}
+
+.outerBox .innerBox .eventBox .eventBox_Box#view {
+  background-color: #c8e5ee;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  max-height: 3rem;
+}
+
+.outerBox .innerBox .eventBox .eventBox_Box#event {
+  background-color: #c8e5ee;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  max-height: 3rem;
+}
+
+.outerBox .innerBox .eventBox .eventBox_Box#planner {
+  text-align: center;
+  background-color: #c8e5ee;
+  -webkit-box-flex: 15;
+      -ms-flex-positive: 15;
+          flex-grow: 15;
+}
+
+.outerBox .innerBox .eventBox .eventBox_Box#updater {
+  text-align: center;
+  background-color: #c8e5ee;
+  -webkit-box-flex: 15;
+      -ms-flex-positive: 15;
+          flex-grow: 15;
+}
+
+.outerBox .innerBox .eventBox .eventBox_Box#log {
+  background-color: #c8e5ee;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  max-height: 3rem;
+}
+
+.outerBox .innerBox .eventBox .eventBox_Box p {
+  font: bold 1rem sans-serif;
+}
+
+.outerBox .innerBox .eventBox .hidden {
+  display: none;
+}
+/*# sourceMappingURL=style.css.map */

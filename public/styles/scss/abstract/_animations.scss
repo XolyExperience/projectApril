@@ -1,0 +1,21 @@
+@mixin testAnimation($delay) {
+    animation: {
+        name: test;
+        duration: 1s;
+        delay: $delay;
+        iteration-count: 1;
+        fill-mode: both;
+    }
+}
+.moveUp {
+    @include testAnimation(0s);
+}
+
+@keyframes test {
+    0% {
+        opacity: 0;
+    }
+    100% {
+        opacity: 1;
+    }
+}

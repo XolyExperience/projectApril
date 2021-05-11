@@ -1,0 +1,154 @@
+@import 'importer';
+
+body {
+    background-color: $color-white;
+}
+
+.outerBox {
+    background-color: $color-blue-lightblue;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border-radius: 3rem 3rem 0 0;
+    header {
+        text-align: center;
+        padding: 1rem;
+        h1 {
+            font-size: 2.5rem;
+        }
+    }
+    .innerBox {
+        background-color: $color-white;
+        display: grid;
+        grid-template-columns: 80vw 20vw;
+        grid-template-rows: 4rem auto;
+        .innerHeader {
+            grid-column-start: span 2;
+            padding: 20px;
+            text-align: center;
+            font-size: 2em;
+            display: flex;
+            justify-content: space-evenly;
+            button {
+                width: 6rem;
+                border: none;
+                background-color: white;
+                cursor: pointer;
+                &#prev {
+                    background-image: url(../../assets/angle-left.svg);
+                    background-repeat: no-repeat;
+                }
+                &#next {
+                    background-image: url(../../assets/angle-right.svg);
+                    background-repeat: no-repeat;
+                }
+            }
+        }
+        #weekdayBox {
+            display: grid;
+            grid-template-columns: repeat(7, minmax(0, 1fr));
+            .weekday {
+                margin: 2px;
+                background-color: $color-blue-powderblue;
+                padding: 0;
+                min-height: 60vh;
+                h1 {
+                    font-size: 1.75rem;
+                    padding: 0;
+                    margin: 0;
+                    background-color: $color-blue-navy;
+                    color: white;
+                    display: flex;
+                    justify-content: space-evenly;
+                }
+                .event {
+                    border: 1px solid $color-blue-skyblue;
+                    width: 100%;
+                    h3 {
+                        font-size: 1rem;
+                        pointer-events: none;
+                    }
+                    p {
+                        font-size: 0.75rem;
+                        pointer-events: none;
+                        &.hidden {
+                            display: none;
+                        }
+                    }
+                    &:hover {
+                        background-color: lighten(
+                            $color: $color-blue-skyblue,
+                            $amount: 5
+                        );
+                        border: 1px solid blue;
+                    }
+                }
+            }
+            #today {
+                background-color: $color-blue-skyblue;
+            }
+        }
+        .eventBox {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            .eventBox_Box {
+                border-radius: 1rem;
+                width: calc(100% - 2rem);
+                height: 2rem;
+                margin: 2px;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                & p {
+                    pointer-events: none;
+                }
+                &#view {
+                    background-color: lighten(
+                        $color: $color-blue-lightblue,
+                        $amount: 7
+                    );
+                    flex-grow: 1;
+                    max-height: 3rem;
+                }
+                &#event {
+                    background-color: lighten(
+                        $color: $color-blue-lightblue,
+                        $amount: 7
+                    );
+                    flex-grow: 1;
+                    max-height: 3rem;
+                }
+                &#planner {
+                    text-align: center;
+                    background-color: lighten(
+                        $color: $color-blue-lightblue,
+                        $amount: 7
+                    );
+                    flex-grow: 15;
+                }
+                &#updater {
+                    text-align: center;
+                    background-color: lighten(
+                        $color: $color-blue-lightblue,
+                        $amount: 7
+                    );
+                    flex-grow: 15;
+                }
+                &#log {
+                    background-color: lighten(
+                        $color: $color-blue-lightblue,
+                        $amount: 7
+                    );
+                    flex-grow: 1;
+                    max-height: 3rem;
+                }
+                p {
+                    font: bold 1rem sans-serif;
+                }
+            }
+            .hidden {
+                display: none;
+            }
+        }
+    }
+}

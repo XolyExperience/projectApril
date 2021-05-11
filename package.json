@@ -1,29 +1,19 @@
 {
-    "name": "projectApril",
+    "name": "projectaprilscss",
     "version": "1.0.0",
-    "description": "- En användare ska kunna:\r   - Se en veckovy med aktuella events\r   - Lägga till/ta bort events\r   - Uppdatera ett event\r   - Bläddra fram och tillbaka veckovis\r - Ett event ska innehålla:\r   - Titel\r   - Start tid\r   - Slut tid\r - Applikationen ska kunna:\r   - Spara eventen till fil(er)",
-    "main": "server.js",
+    "description": "",
     "type": "module",
+    "main": "server.js",
     "scripts": {
-        "start": "node server",
-        "dev": "nodemon server"
+        "dev": "nodemon server.js",
+        "start": "node server.js"
     },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/XolyExperience/projectApril.git"
-    },
-    "keywords": [],
     "author": "",
     "license": "ISC",
-    "bugs": {
-        "url": "https://github.com/XolyExperience/projectApril/issues"
-    },
-    "homepage": "https://github.com/XolyExperience/projectApril#readme",
     "devDependencies": {
         "nodemon": "^2.0.7"
     },
     "dependencies": {
-        "body-parser": "^1.19.0",
         "express": "^4.17.1"
     }
 }

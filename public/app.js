@@ -1,6 +1,9 @@
-function setCalendar(today) {
-    let weekdayBox = document.getElementById('weekdayBox');
-    let weekdays = weekdayBox.querySelectorAll('.weekday');
+var idag = new Date();
+var veckaMånad = 'week';
+setCalendar(veckaMånad, idag);
+
+function setCalendar(view, today) {
+    clearCalendar();
 
     // hämtar dag i veckan
     let dayOfWeek = today.getDay();
@@ -10,26 +13,11 @@ function setCalendar(today) {
         dayOfWeek = 7;
     }
 
-    let monday = new Date();
+    let monday = new Date(today);
     if (dayOfWeek != 1) {
         // tar bort 24h för varje dag i veckan som gått
         monday.setHours(-24 * (dayOfWeek - 1));
     }
-
-    let currentDay = new Date(monday);
-    weekdays.forEach((obj) => {
-        obj.dataset.date = currentDay.toLocaleDateString();
-        // lägg till datum i h1 taggen
-        let datum = obj.lastElementChild;
-        const datums = currentDay.getDate();
-        datum.innerHTML = datums;
-        // dynamiskt sätta classen today
-
-        if (today.getDate() === currentDay.getDate()) {
-            obj.id = 'today';
-        }
-        currentDay.setHours(24);
-    });
 
     // dynamiskt sätta år
     let yearNumber = document.getElementById('year');
@@ -55,17 +43,58 @@ function setCalendar(today) {
     ];
     monthNumber.innerHTML = monthNames[month];
 
-    // dynamiskt sätta veckonummer
-    let weekNumber = document.getElementById('week');
-    const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
-    const pastDaysOfYear = (today - firstDayOfYear) / 86400000;
-    weekNumber.innerHTML = `v.${Math.floor(
-        (pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7
-    )}`;
+    if (view === 'week') {
+        // dynamiskt sätta veckonummer
+        let ref = document.getElementById('next');
+        let newEl = document.createElement('div');
+        newEl.id = 'week';
+        const firstDayOfYear = new Date(today.getFullYear(), 0, 1);
+        const pastDaysOfYear = (today - firstDayOfYear) / 86400000;
+        newEl.innerHTML = `v.${Math.floor(
+            (pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7
+        )}`;
+        ref.parentNode.insertBefore(newEl, ref);
+        drawWeeks(1);
+    }
+    if (view === 'month') {
+        drawWeeks(4);
+    }
+
+    let currentDay = new Date(monday);
+    let weekdayBox = document.getElementById('weekdayBox');
+    let weekdays = weekdayBox.querySelectorAll('.weekday');
+    weekdays.forEach((obj) => {
+        obj.dataset.date = currentDay.toLocaleDateString();
+        // lägg till datum i h1 taggen
+        let datum = obj.lastElementChild;
+        const datums = currentDay.getDate();
+        datum.innerHTML = datums;
+        // dynamiskt sätta classen today
+        if (today.getDate() === currentDay.getDate()) {
+            obj.id = 'today';
+        }
+        currentDay.setHours(24);
+    });
+
+    myEventListeners();
+    fetchPosts();
 }
 
-let today = new Date();
-setCalendar(today);
+function drawWeeks(numbOfWeeks) {
+    let j = numbOfWeeks * 7;
+    let i = 0;
+    while (i < j) {
+        drawday();
+        i++;
+    }
+}
+function drawday() {
+    let parent = document.getElementById('weekdayBox');
+    let newDiv = document.createElement('div');
+    newDiv.classList.add('weekday');
+    newDiv.innerHTML = '<h1></h1>';
+    parent.appendChild(newDiv);
+}
 
 class Event {
     constructor(id, title, date, starttime, endtime, description, location) {
@@ -100,29 +129,6 @@ class Event {
     }
 }
 
-function myEventListener() {
-    var events = document.querySelectorAll('.event');
-    var i;
-    for (i = 0; i < events.length; i++) {
-        events[i].addEventListener('click', (e) => {
-            var targetId = e.target.dataset.id;
-            document.getElementById('updater').dataset.targetId = targetId;
-            var fields = document
-                .getElementById('updateForm')
-                .querySelectorAll('*[type="text"]');
-            for (let i = 0; i < fields.length; i++) {
-                let field = fields[i];
-                let eventValue = e.target.children[i].innerHTML;
-                field.value = eventValue;
-            }
-            unHider('updater');
-        });
-    }
-    var eventBtn = document.getElementById('event');
-    eventBtn.addEventListener('click', (e) => {
-        unHider('planner');
-    });
-}
 async function fetchPosts() {
     let events = [];
     const responseFromAPI = await fetch('http://localhost:3000/posts')
@@ -141,13 +147,21 @@ async function fetchPosts() {
                     )
                 );
             });
-            events.forEach((obj) => {
+            let sortedEvents = events.sort(function (a, b) {
+                var c = new Date(a.date),
+                    d = new Date(b.date);
+                var e = new Date(a.starttime),
+                    f = new Date(b.starttime);
+                console.log(e);
+                return c - d || e - f;
+            });
+            sortedEvents.forEach((obj) => {
                 obj.place();
             });
         });
-    myEventListener();
+
+    myEventListenerEvent();
 }
-fetchPosts();
 
 var serializeForm = function (form) {
     var obj = {};
@@ -170,66 +184,10 @@ function clearform() {
     }
 }
 
-function unHider(elementId) {
-    var element = document.getElementById(`${elementId}`);
-    element.classList.remove('hidden');
-}
 function hider(elementId) {
     var element = document.getElementById(elementId);
-    element.classList.add('hidden');
+    element.classList.toggle('hidden');
 }
-
-document.getElementById('planner').addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    fetch('http://localhost:3000/posts', {
-        method: 'POST',
-        body: JSON.stringify(serializeForm(event.target)),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        },
-    })
-        .then(function (response) {
-            if (response.ok) {
-                return response.json();
-            }
-            return Promise.reject(response);
-        })
-        .then(function (data) {
-            setCalendar(today);
-            clearform();
-        })
-        .catch(function (error) {
-            console.warn(error);
-        });
-});
-
-document.getElementById('updater').addEventListener('submit', function (event) {
-    event.preventDefault();
-
-    let postToUpdate = document.getElementById('updater').dataset.targetId;
-    fetch(`http://localhost:3000/posts/${postToUpdate}`, {
-        method: 'PATCH',
-        body: JSON.stringify(serializeForm(event.target)),
-        headers: {
-            'Content-type': 'application/json; charset=UTF-8',
-        },
-    })
-        .then(function (response) {
-            if (response.ok) {
-                return response.json();
-            }
-            return Promise.reject(response);
-        })
-        .then(function (data) {
-            console.log(data);
-            clearform();
-            setCalendar(today);
-        })
-        .catch(function (error) {
-            console.warn(error);
-        });
-});
 
 function clearForm(oForm, eventBox) {
     hider(`${eventBox}`);
@@ -264,4 +222,139 @@ function clearForm(oForm, eventBox) {
                 break;
         }
     }
+}
+function deletePost() {
+    let postToDelete = document.getElementById('updater').dataset.targetId;
+    fetch(`http://localhost:3000/posts/${postToDelete}`, {
+        method: 'DELETE',
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            return Promise.reject(response);
+        })
+        .then(function (data) {
+            console.log(data);
+            clearform();
+            setCalendar(veckaMånad, idag);
+        })
+        .catch(function (error) {
+            console.warn(error);
+        });
+}
+
+function clearCalendar() {
+    document.querySelectorAll('.event').forEach((e) => e.remove());
+
+    if (document.getElementById('week')) {
+        var week = document.getElementById('week');
+        week.remove();
+    }
+    if (document.getElementsByClassName('weekday').length) {
+        var days = document.getElementsByClassName('weekday');
+        for (var i = 0; i < days.length; i) {
+            days[i].remove();
+        }
+    }
+}
+
+document.getElementById('planner').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    fetch('http://localhost:3000/posts', {
+        method: 'POST',
+        body: JSON.stringify(serializeForm(event.target)),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            return Promise.reject(response);
+        })
+        .then(function () {
+            setCalendar(veckaMånad, idag);
+            clearform();
+        })
+        .catch(function (error) {
+            console.warn(error);
+        });
+});
+
+document.getElementById('updater').addEventListener('submit', function (event) {
+    event.preventDefault();
+
+    let postToUpdate = document.getElementById('updater').dataset.targetId;
+    fetch(`http://localhost:3000/posts/${postToUpdate}`, {
+        method: 'PATCH',
+        body: JSON.stringify(serializeForm(event.target)),
+        headers: {
+            'Content-type': 'application/json; charset=UTF-8',
+        },
+    })
+        .then(function (response) {
+            if (response.ok) {
+                return response.json();
+            }
+            return Promise.reject(response);
+        })
+        .then(function (data) {
+            console.log(data);
+            clearform();
+            setCalendar(veckaMånad, idag);
+        })
+        .catch(function (error) {
+            console.warn(error);
+        });
+});
+
+function myEventListenerView() {
+    var viewBtn = document.getElementById('view');
+    viewBtn.addEventListener('click', (e) => {
+        if (view === 'week') {
+            view = 'month';
+            setCalendar(view, today);
+            console.log('switch to month');
+        } else {
+            view = 'week';
+            setCalendar(view, today);
+            console.log('switch to week');
+        }
+    });
+}
+function myEventListenerAddEvent() {
+    var eventBtn = document.getElementById('event');
+    eventBtn.addEventListener('click', (e) => {
+        hider('planner');
+    });
+}
+function myEventListenerEvent() {
+    var events = document.querySelectorAll('.event');
+    var i;
+    for (i = 0; i < events.length; i++) {
+        events[i].addEventListener('click', (e) => {
+            var targetId = e.target.dataset.id;
+            document.getElementById('updater').dataset.targetId = targetId;
+            var fields = document
+                .getElementById('updateForm')
+                .querySelectorAll('*[type="text"]');
+            for (let i = 0; i < fields.length; i++) {
+                let field = fields[i];
+                let eventValue = e.target.children[i].innerHTML;
+                field.value = eventValue;
+            }
+            hider('updater');
+        });
+    }
+}
+
+function myEventListeners() {
+    myEventListenerView();
+    myEventListenerAddEvent();
 }

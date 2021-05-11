@@ -71,6 +71,7 @@ p {
 /* Extra large devices (large laptops and desktops, 1200px and up) */
 body {
   background-color: #ffffff;
+  overflow-x: hidden;
 }
 
 .outerBox {
@@ -102,7 +103,7 @@ body {
 .outerBox .innerBox .innerHeader {
   -ms-grid-column: span 2;
       grid-column-start: span 2;
-  padding: 20px;
+  padding: 10px;
   text-align: center;
   font-size: 2em;
   display: -webkit-box;
@@ -137,14 +138,12 @@ body {
       grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
-.outerBox .innerBox #weekdayBox .weekday {
-  margin: 2px;
+.outerBox .innerBox #weekdayBox .weekdayTop {
   background-color: #b0e0e6;
   padding: 0;
-  min-height: 60vh;
 }
 
-.outerBox .innerBox #weekdayBox .weekday h1 {
+.outerBox .innerBox #weekdayBox .weekdayTop h1 {
   font-size: 1.75rem;
   padding: 0;
   margin: 0;
@@ -158,8 +157,28 @@ body {
           justify-content: space-evenly;
 }
 
+.outerBox .innerBox #weekdayBox .weekday {
+  background-color: #b0e0e6;
+  padding: 0;
+  min-height: 60vh;
+}
+
+.outerBox .innerBox #weekdayBox .weekday h1 {
+  font-size: 1.75rem;
+  padding: 0;
+  margin: 0;
+  background-color: #0000ff;
+  color: white;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+}
+
 .outerBox .innerBox #weekdayBox .weekday .event {
-  border: 1px solid #87ceeb;
+  border: 0.5px solid #b0e0e6;
   width: 100%;
 }
 
